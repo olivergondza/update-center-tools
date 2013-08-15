@@ -11,9 +11,9 @@ fi
 destination=/var/opt/update-center/$1/$2.hpi
 
 if [ $# -eq 2 ]; then
-	url=http://updates.jenkins-ci.org/latest/$2.hpi
+  url=http://updates.jenkins-ci.org/latest/$2.hpi
 else
   url=http://updates.jenkins-ci.org/download/plugins/$2/$3/$2.hpi
 fi
 
-curl -o $destination $url
+wget -nv -O $destination $url || rm $destination
