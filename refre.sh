@@ -13,6 +13,9 @@ cd /opt/update-center/
 
 rm -r /var/www/$1/*
 
+mkdir -p /var/www/$1/download/raw-plugins
+cp /var/opt/update-center/$1/* /var/www/$1/download/raw-plugins/
+
 /opt/apache-maven-3.0.5/bin/mvn -e exec:java -Dexec.args="\
     -id $1\
     -hpiDirectory /var/opt/update-center/$1/\
