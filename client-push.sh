@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Put local plugin to the remote repository via scp
-# Ex.: ./client-push.sh path-to.hpi jenkins-test
+# Ex.: ./client-push.sh jenkins-test path-to.hpi
 
 if [ $# -lt 2 ]; then
   echo "Usage: $0 <update_center_id> <path_to_hpi>" >&2
