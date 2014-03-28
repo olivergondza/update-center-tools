@@ -15,4 +15,12 @@ if [ ! -d $2 ]; then
   mkdir $2
 fi
 
-scp -r $hostname:/var/opt/update-center/$1/* $2/
+host=${hostname##*@}
+echo exit | telnet $host 22 > /dev/null 2> /dev/null
+if [ $? -eq 0 ]; then
+  scp -r $hostname:/var/opt/update-center/$1/* $2/
+else
+  mkdir $2 || cd $2
+  wget -r -nd -N --no-check-certificate -A hpi,jpi --quiet http://$host/$1/download/raw-plugins/
+  cd -
+fi
