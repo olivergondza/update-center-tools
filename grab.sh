@@ -16,4 +16,8 @@ else
   url=http://updates.jenkins-ci.org/download/plugins/$2/$3/$2.hpi
 fi
 
+# Delete all existing artifacts that might be using different suffix
+# to avoid both .jpi and .hpi to be present
+rm -vf /var/opt/update-center/$1/$2.[jh]p[il]* || true
+
 wget --no-check-certificate -nv -O $destination $url || rm $destination
