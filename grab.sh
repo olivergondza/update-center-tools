@@ -16,4 +16,4 @@ else
   url=http://updates.jenkins-ci.org/download/plugins/$2/$3/$2.hpi
 fi
 
-wget -nv -O $destination $url || rm $destination
+wget --no-check-certificate -nv -O $destination $url || rm $destination
