@@ -25,7 +25,7 @@ tar -zcf /var/www/$1/download/raw-plugins.tar.gz /var/www/$1/download/raw-plugin
     -root-certificate /etc/pki/tls/certs/update-center.crt\
     -www /var/www/$1\
     -download /var/www/$1/download\
-    -repository http://ogondza01.lab.eng.brq.redhat.com/$1\
+    -repository $HOSTNAME/$1\
     -includeSnapshots\
     -pretty"
 
