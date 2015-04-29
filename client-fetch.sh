@@ -23,7 +23,8 @@ if [ $hostname == *@* ] && [ `echo exit | telnet ${hostname##*@} 22 > /dev/null 
   scp -r $hostname:/var/opt/update-center/$1/* $2/
 else
   host=${hostname##*@}
-  wget --no-check-certificate --quiet http://$host/$1/download/raw-plugins.tar.gz -O plugins.tar.gz
-  tar xf plugins.tar.gz -C $2 --strip-components=1
-  rm -f plugins.tar.gz
+  tar_path=$2/plugins.tar.gz
+  wget --no-check-certificate --quiet http://$host/$1/download/raw-plugins.tar.gz -O $tar_path
+  tar xvf $tar_path -C $2
+  rm -f $tar_path
 fi
