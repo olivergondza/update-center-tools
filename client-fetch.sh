@@ -25,6 +25,6 @@ else
   host=${hostname##*@}
   tar_path=$2/plugins.tar.gz
   wget --no-check-certificate --quiet http://$host/$1/download/raw-plugins.tar.gz -O $tar_path
-  tar xvf $tar_path -C $2
+  tar xf $tar_path -C $2
   rm -f $tar_path
 fi
