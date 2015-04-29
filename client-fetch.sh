@@ -13,6 +13,9 @@ hostname=`cat $dir/hostname`
 
 if [ ! -d $2 ]; then
   mkdir $2
+else
+  echo "Directory already exists $2" >&2
+  exit 1
 fi
 
 # Use scp iff username provided and port 22 is open
