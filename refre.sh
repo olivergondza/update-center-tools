@@ -11,16 +11,20 @@ fi
 
 cd /opt/update-center/
 
-rm -r /var/www/$1/*
+dest=/var/www/$1
 
-mkdir -p /var/www/$1/download/raw-plugins
+# work in temporary directory
+temp_dest=$dest.$$
+rm -rf $temp_dest
+
+mkdir -p $temp_dest/download/raw-plugins
 
 # Create flat plugins dir
-cp /var/opt/update-center/$1/* /var/www/$1/download/raw-plugins/
+cp /var/opt/update-center/$1/* $temp_dest/download/raw-plugins/
 
 # Create tarbal with all the raw files in raw-plugins directory
-cd /var/www/$1/download/raw-plugins
-tar -zcf /var/www/$1/download/raw-plugins.tar.gz ./*
+cd $temp_dest/download/raw-plugins
+tar -zcf $temp_dest/download/raw-plugins.tar.gz ./*
 cd -
 
 /opt/apache-maven-3.0.5/bin/mvn -e exec:java -Dexec.args="\
@@ -29,9 +33,12 @@ cd -
     -key /etc/pki/tls/private/update-center.key\
     -certificate /etc/pki/tls/certs/update-center.crt\
     -root-certificate /etc/pki/tls/certs/update-center.crt\
-    -www /var/www/$1\
-    -download /var/www/$1/download\
+    -www $temp_dest\
+    -download $temp_dest/download\
     -repository http://$HOSTNAME/$1\
     -includeSnapshots\
     -pretty"
 
+# Replace old with just created
+rm -rf $dest
+mv $temp_dest $dest
