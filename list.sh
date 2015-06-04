@@ -14,5 +14,6 @@ function version() {
 }
 
 for plugin in $data_dir/*.[jh]pi; do
-  echo "`basename $plugin`:`version $plugin`"
+  name=`basename $plugin`
+  echo "${name%%.*} `version $plugin`"
 done
