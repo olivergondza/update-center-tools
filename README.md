@@ -68,6 +68,7 @@ Command | |
 `list.sh <update_center_id>` | List all plugins in UC with their versions.
 `dependency-list.sh <update_center_id>` | List all plugins in UC listing dependent plugins. Note it does not check if dependencies are satisfied in that UC.
 `client-fetch.sh <update_center_id> <local_dir>` | Download all plugins from UC into a local directory. This directory can be use as `$JENKINS_HOME/plugins` right away.
+`diff.sh <src_update_center_id> <dst_update_center_id>` | Compare plugins and versions of 2 update centers.
 
 ### Manipulate content
 
