@@ -17,7 +17,7 @@ else
 fi
 
 # Delete all existing artifacts that might be using different suffix
-# to avoid both .jpi and .hpi to be present
-rm -vf /var/opt/update-center/$1/$2.[jh]p[il]* || true
+# to avoid both .jpi and .hpi to be present. Keep .pinned, though.
+rm -vf /var/opt/update-center/$1/$2.[jh]p[il] || true
 
 wget --no-check-certificate -nv -O $destination $url || rm $destination
