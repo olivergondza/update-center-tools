@@ -27,7 +27,7 @@ uc_hostname=${uc_authority##*@}
 uc_user=${uc_authority%@*}
 
 if [ -f "$bin_local" ]; then
-  uc_authority=$uc_authority uc_hostname=$uc_hostname uc_user=$uc_user . "$bin_local" "$@"
+  . "$bin_local" "$@"
   exit $?
 elif [ -f "$bin_remote" ]; then
   # Run bash remotely and feed the script via stdin
