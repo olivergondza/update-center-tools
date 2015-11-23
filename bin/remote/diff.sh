@@ -1,7 +1,7 @@
 # Compare content of 2 update centers.
 
 if [ $# -ne 2 ]; then
-  echo "Usage: $uct_command diff <src_update_center_id> <dst_update_center_id>" >&2
+  command_usage "diff <src_update_center_id> <dst_update_center_id>" >&2
   exit 1
 fi
 

@@ -1,7 +1,7 @@
 # Unpin plugins in the update center
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $uct_command unpin <update_center_id> <artifact_id...>" >&2
+  command_usage "unpin <update_center_id> <artifact_id...>" >&2
   exit 1
 fi
 

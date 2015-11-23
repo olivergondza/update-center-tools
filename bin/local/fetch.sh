@@ -1,7 +1,7 @@
 # Fetch remote update center plugins to local directory
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $uct_command fetch <update_center_id> <local-dir>" >&2
+  command_usage "fetch <update_center_id> <local-dir>" >&2
   exit 1
 fi
 

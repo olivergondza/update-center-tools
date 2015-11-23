@@ -11,6 +11,7 @@ EOF
 }
 
 dir="$( cd "$( dirname "$0" )" && pwd )"
+. "$dir/bin/lib.sh"
 
 if [ $# -eq 0 ]; then
   usage >&2
@@ -34,7 +35,7 @@ if [ -f "$bin_local" ]; then
 elif [ -f "$bin_remote" ]; then
   # Run bash remotely and feed the script via stdin
   # The script is concatenated lib.sh and bin/remote/<cmd>.sh
-  cat $dir/bin/lib.sh $bin_remote | ssh $uc_authority uct_command="$uct_command" "bash -s" "$@"
+  cat $dir/bin/lib.sh "$bin_remote" | ssh $uc_authority uct_command="$uct_command" "bash -s" "$@"
   exit $?
 else
   echo "Unknown command '$cmd'" >&2

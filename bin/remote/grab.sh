@@ -1,7 +1,7 @@
 # Grab existing plugin from community update center and place it to the local update center
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $uct_command grab <update_center_id> <artifact_id> [<version>]" >&2
+  command_usage "grab <update_center_id> <artifact_id> [<version>]" >&2
   exit 1
 fi
 

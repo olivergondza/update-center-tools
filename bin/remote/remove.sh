@@ -1,7 +1,7 @@
 # Remove plugins from update center. This is destructive operation.
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $uct_command remove <update_center_id> <artifact_id...>" >&2
+  command_usage "remove <update_center_id> <artifact_id...>" >&2
   exit 1
 fi
 

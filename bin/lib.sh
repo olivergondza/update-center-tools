@@ -1,6 +1,10 @@
 # This is needed to be able to `exit` the command from subshell
 set -e
 
+function command_usage() {
+  echo "Usage: $uct_command $1"
+}
+
 # Get the data dir path
 # @param String update center ID
 # @return String path to hpi directory
