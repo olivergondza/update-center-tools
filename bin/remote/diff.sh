@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Compare content of 2 update centers.
 
 if [ $# -ne 2 ]; then
@@ -7,6 +5,4 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-
-sdiff -s <($DIR/list.sh $1) <($DIR/list.sh $2)
+sdiff -s <(list_plugins_in_uc $1) <(list_plugins_in_uc $2)

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Refresh update center metadata
 # Ex.: ./refre.sh jenkins-test
 

@@ -1,0 +1,41 @@
+#!/bin/bash
+
+function usage() {
+  cat <<EOF
+Usage: $0 <command> [command args...]
+
+Available commands:
+EOF
+
+  ls bin/remote/* bin/local/* | xargs -n 1 basename -s .sh | sort
+}
+
+dir="$( cd "$( dirname "$0" )" && pwd )"
+
+if [ $# -eq 0 ]; then
+  usage >&2
+  exit 1
+fi
+
+cmd=$1
+bin_local="$dir/bin/local/$cmd.sh"
+bin_remote="$dir/bin/remote/$cmd.sh"
+shift
+
+uc_authority=$(cat $dir/hostname)
+uc_hostname=${uc_authority##*@}
+uc_user=${uc_authority%@*}
+
+if [ -f "$bin_local" ]; then
+  uc_authority=$uc_authority uc_hostname=$uc_hostname uc_user=$uc_user . "$bin_local" "$@"
+  exit $?
+elif [ -f "$bin_remote" ]; then
+  # Run bash remotely and feed the script via stdin
+  # The script is concatenated lib.sh and bin/remote/<cmd>.sh
+  cat $dir/bin/lib.sh $bin_remote | ssh $uc_authority "bash -s" "$@"
+  exit $?
+else
+  echo "Unknown command '$cmd'" >&2
+  usage >&2
+  exit 1
+fi

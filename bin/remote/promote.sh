@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Replace content of destination UC by the content on source UC.
 # After the operations contents will be identical, the original destination content will be lost.
 
@@ -8,20 +6,10 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+src_dir=$(update_center_dir $1)
+dst_dir=$(update_center_dir $2)
 
-src_dir="/var/opt/update-center/$1"
-if [ ! -d $src_dir ]; then
-  echo "Source UC does not exist: $src_dir" >&2
-  exit 1
-fi
-dst_dir="/var/opt/update-center/$2"
-if [ ! -d $dst_dir ]; then
-  echo "Destination UC does not exist: $dst_dir" >&2
-  exit 1
-fi
-
-sdiff -s <($DIR/list.sh $1) <($DIR/list.sh $2)
+sdiff -s <(list_plugins_in_uc $1) <(list_plugins_in_uc $2)
 if [ $? -eq 0 ]; then
   echo "No changes to promote" >&2
   exit 0

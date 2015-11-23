@@ -8,13 +8,10 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
-dir="$( cd "$( dirname "$0" )" && pwd )"
-hostname=`cat $dir/hostname`
-
 if [ ! -z $3 ]; then
   target=$3
 else
   target=$2
 fi
 
-scp $2 $hostname:/var/opt/update-center/$1/$3
+scp $2 $uc_authority:/var/opt/update-center/$1/$3

@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Pin plugins in the update center
 # Ex.: ./pin.sh jenkins-test junit
 
@@ -8,7 +6,7 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
-data_dir=/var/opt/update-center/$1
+data_dir=$(update_center_dir $1)
 
 shift
 

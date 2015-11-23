@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Grab existing plugin from community update center and place it to the local update center
 # Ex.: ./grab.sh jenkins-test git-plugin 1.45
 
