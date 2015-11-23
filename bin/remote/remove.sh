@@ -1,8 +1,7 @@
 # Remove plugins from update center. This is destructive operation.
-# Ex.: ./grab.sh jenkins-test git-plugin
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $0 <update_center_id> <artifact_id...>" >&2
+  echo "Usage: $uct_command remove <update_center_id> <artifact_id...>" >&2
   exit 1
 fi
 

@@ -1,9 +1,8 @@
 # Refresh update center metadata
-# Ex.: ./refre.sh jenkins-test
 
 if [ $# -ne 1 ]; then
   echo "No update_center_id provided" >&2
-  echo "Usage: $0 <update_center_id>" >&2
+  echo "Usage: $uct_command refresh <update_center_id>" >&2
   exit 1
 fi
 

@@ -2,7 +2,7 @@
 # After the operations contents will be identical, the original destination content will be lost.
 
 if [ $# -ne 2 ]; then
-  echo "Usage: $0 <src_update_center_id> <dst_update_center_id>" >&2
+  echo "Usage: $uct_command promote <src_update_center_id> <dst_update_center_id>" >&2
   exit 1
 fi
 

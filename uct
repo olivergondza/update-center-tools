@@ -2,7 +2,7 @@
 
 function usage() {
   cat <<EOF
-Usage: $0 <command> [command args...]
+Usage: $uct_command <command> [command args...]
 
 Available commands:
 EOF
@@ -26,13 +26,15 @@ uc_authority=$(cat $dir/hostname)
 uc_hostname=${uc_authority##*@}
 uc_user=${uc_authority%@*}
 
+uct_command="$0"
+
 if [ -f "$bin_local" ]; then
   . "$bin_local" "$@"
   exit $?
 elif [ -f "$bin_remote" ]; then
   # Run bash remotely and feed the script via stdin
   # The script is concatenated lib.sh and bin/remote/<cmd>.sh
-  cat $dir/bin/lib.sh $bin_remote | ssh $uc_authority "bash -s" "$@"
+  cat $dir/bin/lib.sh $bin_remote | ssh $uc_authority uct_command="$uct_command" "bash -s" "$@"
   exit $?
 else
   echo "Unknown command '$cmd'" >&2

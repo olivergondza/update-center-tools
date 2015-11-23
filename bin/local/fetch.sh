@@ -1,10 +1,7 @@
-#!/bin/bash
-
 # Fetch remote update center plugins to local directory
-# Ex.: ./client-fetch.sh jenkins-test local-dir
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $0 <update_center_id> <local-dir>" >&2
+  echo "Usage: $uct_command fetch <update_center_id> <local-dir>" >&2
   exit 1
 fi
 

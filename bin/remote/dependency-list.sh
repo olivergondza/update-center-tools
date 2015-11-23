@@ -1,5 +1,7 @@
+# List all plugins and their dependencies
+
 if [ $# -lt 1 ]; then
-  echo "Usage: $0 <update_center_id>" >&2
+  echo "Usage: $uct_command dependency-list <update_center_id>" >&2
   exit 1
 fi
 

@@ -1,8 +1,7 @@
 # Unpin plugins in the update center
-# Ex.: ./unpin.sh jenkins-test junit
 
 if [ $# -lt 2 ]; then
-  echo "Usage: $0 <update_center_id> <artifact_id...>" >&2
+  echo "Usage: $uct_command unpin <update_center_id> <artifact_id...>" >&2
   exit 1
 fi
 
