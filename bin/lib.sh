@@ -18,7 +18,7 @@ function update_center_dir() {
 # @param String path to file
 # @return String version string
 function plugin_version() {
-  zipgrep '-h' Plugin-Version $1 META-INF/MANIFEST.MF | sed "s/Plugin-Version: //"
+  zipgrep '-h' Plugin-Version $1 META-INF/MANIFEST.MF | sed "s/Plugin-Version: //" | tr -d '\r' # CRLF
 }
 
 # List all plugins in hpi directory
@@ -28,6 +28,10 @@ function list_plugins_in_uc() {
 
   for plugin in $data_dir/*.[jh]pi; do
     name=$(basename $plugin)
-    echo "${name%%.*} $(plugin_version $plugin)"
+    line="${name%%.*} $(plugin_version $plugin)"
+    if [ -f ${plugin}.pinned ]; then
+      line="$line (pinned)"
+    fi
+    echo $line
   done
 }
