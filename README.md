@@ -47,17 +47,7 @@ There is also a special command to download whole plugin collection into one dir
 
 ## Manipulating content
 
-All the command in the tooling fits into 2 categories: client and server commands.
-Commands its name starts with `client` are meant to be called remotely, while those
-that does not are supposed to be called on update center host itself. There is a
-way to call server command from client:
-
-    # on server
-    $ ./my-command.sh and my arguments
-    # can be called from client like so
-    $ ./client.sh my-command.sh and my arguments
-
-To make sure this work it is expected to have the same version checked out on both ends.
+All commands are invoked as `./uct COMMAND [<COMMAND_OPTIONS>...]`.
 
 ### Inspect content
 
@@ -65,10 +55,10 @@ None of these commands will alter the content of the UC in any way.
 
 Command | |
 --- | ---
-`list.sh <update_center_id>` | List all plugins in UC with their versions.
-`dependency-list.sh <update_center_id>` | List all plugins in UC listing dependent plugins. Note it does not check if dependencies are satisfied in that UC.
-`client-fetch.sh <update_center_id> <local_dir>` | Download all plugins from UC into a local directory. This directory can be use as `$JENKINS_HOME/plugins` right away.
-`diff.sh <src_update_center_id> <dst_update_center_id>` | Compare plugins and versions of 2 update centers.
+`list <update_center_id>` | List all plugins in UC with their versions.
+`dependency-list <update_center_id>` | List all plugins in UC listing dependent plugins. Note it does not check if dependencies are satisfied in that UC.
+`client-fetch <update_center_id> <local_dir>` | Download all plugins from UC into a local directory. This directory can be use as `$JENKINS_HOME/plugins` right away.
+`diff <src_update_center_id> <dst_update_center_id>` | Compare plugins and versions of 2 update centers.
 
 ### Manipulate content
 
@@ -76,10 +66,12 @@ These commands will modify the raw content, though not the generated content exp
 
 Command | |
 --- | ---
-`grab.sh <update_center_id> <artifact_id> [<version>]` | Grab community plugin identified by artifact id and version and place it into UC. Any old version will be removed. If version is omitted, latest community version will be used.
-`remove.sh <update_center_id> <artifact_id...>` | Remove one or more plugins from an updatecenter.
-`client-push.sh <update_center_id> <path_to_hpi> [<targe_file_name>]` | Place local hpi into update center. `targe_file_name` can be used optionally to use different basename. `grab.sh` is always preferred over direct pushing.
-`promote.sh <src_update_center_id> <dst_update_center_id>` | Replace content of one UC by another. User will be prompted to confirm changes. This is useful to expose `testing` collection first and then *prmote* it to stable when ready.
+`grab <update_center_id> <artifact_id> [<version>]` | Grab community plugin identified by artifact id and version and place it into UC. Any old version will be removed. If version is omitted, latest community version will be used.
+`remove <update_center_id> <artifact_id...>` | Remove one or more plugins from an updatecenter.
+`push <update_center_id> <path_to_hpi> [<targe_file_name>]` | Place local hpi into update center. `targe_file_name` can be used optionally to use different basename. `grab` is always preferred over direct pushing.
+`promote <src_update_center_id> <dst_update_center_id>` | Replace content of one UC by another. User will be prompted to confirm changes. This is useful to expose `testing` collection first and then *prmote* it to stable when ready.
+`pin <update_center_id> <artifact_id...>` | Create pinned file to be read by Jenkins once deployed manually.
+`unpin <update_center_id> <artifact_id...>` | Unpin pinned plugins.
 
 ### Publishing content
 
@@ -87,4 +79,4 @@ This commands manipulate generated content exposed through http server.
 
 Command | |
 --- | ---
-`refre.sh <update_center_id>` | Expose update center data and metadata to the world. This effectively publishes the changes of the content.
+`refresh <update_center_id>` | Expose update center data and metadata to the world. This effectively publishes the changes of the content.
