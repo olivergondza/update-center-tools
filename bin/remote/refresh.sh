@@ -25,7 +25,7 @@ tar -zcf $temp_dest/download/raw-plugins.tar.gz ./*
 cd -
 
 /opt/apache-maven-3.0.5/bin/mvn -e exec:java -Dexec.args="\
-    -id $1\
+    -id default\
     -hpiDirectory /var/opt/update-center/$1/\
     -key /etc/pki/tls/private/update-center.key\
     -certificate /etc/pki/tls/certs/update-center.crt\
