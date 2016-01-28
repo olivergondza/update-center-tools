@@ -7,8 +7,11 @@ fi
 
 if [ ! -z $3 ]; then
   target=$3
+  if [[ $target != *.hpi ]]; then
+    target="${target}.hpi"
+  fi
 else
-  target=$2
+  target=$(basename "$2")
 fi
 
-scp $2 $uc_authority:/var/opt/update-center/$1/$3
+echo scp "$2" $uc_authority:/var/opt/update-center/$1/$target
