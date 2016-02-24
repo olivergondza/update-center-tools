@@ -8,9 +8,20 @@ fi
 
 function _refresh() {
     dest=/var/www/$1
-
     # work in temporary directory and switch semi-atomically
     temp_dest=$(mktemp -d ${dest}.XXXX)
+
+    __refresh $1 $temp_dest > $temp_dest/log 2>&1
+
+    # Replace old dir with just created
+    rm -rf $dest
+    rm -f $temp_dest/log
+    mv $temp_dest $dest
+}
+
+function __refresh() {
+    dest=/var/www/$1
+    temp_dest=$2
 
     mkdir -p $temp_dest/download/raw-plugins
 
@@ -33,10 +44,6 @@ function _refresh() {
         -repository http://$HOSTNAME/$1\
         -includeSnapshots\
         -pretty"
-
-    # Replace old dir with just created
-    rm -rf $dest
-    mv $temp_dest $dest
 }
 
 cd /opt/update-center/
