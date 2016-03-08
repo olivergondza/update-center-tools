@@ -48,12 +48,8 @@ function __refresh() {
 
 cd /opt/update-center/
 
-if [ $# -eq 1 ]; then
-    _refresh $1
-else
-    while [ $# -ne 0 ]; do
-      # Detach descriptors to release ssh channel
-      _refresh $1 < /dev/null > /dev/null 2>&1 &
-      shift
-    done
-fi
+while [ $# -ne 0 ]; do
+  # Detach descriptors to release ssh channel
+  _refresh $1 < /dev/null > /dev/null 2>&1 &
+  shift
+done
