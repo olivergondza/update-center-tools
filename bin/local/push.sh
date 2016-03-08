@@ -14,4 +14,4 @@ else
   target=$(basename "$2")
 fi
 
-echo scp "$2" $uc_authority:/var/opt/update-center/$1/$target
+scp "$2" $uc_authority:/var/opt/update-center/$1/$target
