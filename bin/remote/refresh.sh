@@ -6,12 +6,13 @@ if [ $# -eq 0 ]; then
   exit 1
 fi
 
+# @param String Update center ID
+# @param String Temporary output dir
 function _refresh() {
     dest=/var/www/$1
-    # work in temporary directory and switch semi-atomically
-    temp_dest=$(mktemp -d ${dest}.XXXX)
+    temp_dest=$2
 
-    __refresh $1 $temp_dest > $temp_dest/log 2>&1
+    __refresh $1 $temp_dest
 
     # Replace old dir with just created
     rm -rf $dest
@@ -20,6 +21,8 @@ function _refresh() {
     chmod 755 $dest
 }
 
+# @param String Update center ID
+# @param String Temporary output dir
 function __refresh() {
     dest=/var/www/$1
     temp_dest=$2
@@ -50,7 +53,10 @@ function __refresh() {
 cd /opt/update-center/
 
 while [ $# -ne 0 ]; do
+  # work in temporary directory and switch semi-atomically
+  temp_dest=$(mktemp -d /var/www/${1}.XXXX)
+
   # Detach descriptors to release ssh channel
-  _refresh $1 < /dev/null > /dev/null 2>&1 &
+  _refresh $1 $temp_dest < /dev/null > $temp_dest/log 2>&1 &
   shift
 done
