@@ -7,7 +7,7 @@ Usage: $uct_command <command> [command args...]
 Available commands:
 EOF
 
-  ls bin/remote/* bin/local/* | xargs -n 1 basename -s .sh | sort
+  ls $dir/bin/remote/* $dir/bin/local/* | xargs -n 1 basename -s .sh | sort
 }
 
 dir="$( cd "$( dirname "$0" )" && pwd )"
