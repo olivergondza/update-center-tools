@@ -15,7 +15,7 @@ function _refresh() {
 
     # Replace old dir with just created
     rm -rf $dest
-    rm -f $temp_dest/log
+    #rm -f $temp_dest/log
     mv $temp_dest $dest
     chmod 755 $dest
 }
