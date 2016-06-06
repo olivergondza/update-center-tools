@@ -18,11 +18,14 @@ function invoke_remote() {
 
 ### Update center
 
+UC_SRC_ROOTDIR="/var/opt/update-center/"
+UC_DST_ROOTDIR="/var/www/"
+
 # Get the data dir path
 # @param String update center ID
 # @return String path to hpi directory
 function update_center_dir() {
-  data_dir=/var/opt/update-center/$1
+  data_dir=$UC_SRC_ROOTDIR/$1
 
   if [ ! -d $data_dir ]; then
     echo "Invalid update center ID: $1" >&2
