@@ -1,9 +1,22 @@
 # This is needed to be able to `exit` the command from subshell
 set -e
 
+### General
+
 function command_usage() {
   echo "Usage: $uct_command $1"
 }
+
+# Invoke remote part of the command from its local part
+# @param String Command name
+# @param* String Arguments
+function invoke_remote() {
+  command_name=$1
+  shift
+  cat $dir/bin/lib.sh "$dir/bin/remote/$command_name.sh" | ssh $uc_authority uct_command="$command_name" "bash -s" "$@"
+}
+
+### Update center
 
 # Get the data dir path
 # @param String update center ID
@@ -25,10 +38,16 @@ function plugin_version() {
   zipgrep '-h' Plugin-Version $1 META-INF/MANIFEST.MF | sed "s/Plugin-Version: //" | tr -d '\r' # CRLF
 }
 
-# List all plugins in hpi directory
+# List all plugins in update center directory
 # @param String UC name
 function list_plugins_in_uc() {
-  data_dir=$(update_center_dir "$1")
+  list_plugins_in_dir "$(update_center_dir "$1")"
+}
+
+# List all plugins in HPI directory
+# @param String Path to the dir
+function list_plugins_in_dir() {
+  data_dir="$1"
 
   for plugin in $data_dir/*.[jh]pi; do
     name=$(basename $plugin)
