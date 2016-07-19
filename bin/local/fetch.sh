@@ -19,8 +19,8 @@ if [ $uc_hostname == *@* ] && [ $(echo exit | telnet ${uc_hostname##*@} 22 > /de
 else
   tar_path=$2/plugins.tar.gz
   src_path=http://$uc_hostname/$1/download/raw-plugins.tar.gz
-  curl -LkSsf $src_path -o $tar_path
-  if [ $? -ne 0 ]; then
+  curl -LkSsf $src_path -o $tar_path || true
+  if [ ! -f $tar_path ]; then
     echo "Failed to download: $src_path" >&2
     exit 1
   fi

@@ -5,7 +5,7 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
-destination=/var/opt/update-center/$1/$2.hpi
+destination=$(update_center_dir $1)/$2.hpi
 
 if [ $# -eq 2 ]; then
   url=http://updates.jenkins-ci.org/latest/$2.hpi
