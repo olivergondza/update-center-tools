@@ -1,7 +1,7 @@
 # Duplicate existing collection
 
 if [ $# -ne 2 ]; then
-  command_usage "copy-sollection <src_update_center_id> <new_update_center_id>" >&2
+  command_usage "copy-collection <src_update_center_id> <new_update_center_id>" >&2
   exit 1
 fi
 
