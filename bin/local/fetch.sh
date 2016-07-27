@@ -27,3 +27,19 @@ else
   tar xf $tar_path -C $2
   rm -f $tar_path
 fi
+
+# Pin all detached plugins
+# See ClassicPluginStrategy#DETACHED_LIST
+for detached in "maven-plugin" "subversion" "cvs" "ant" "javadoc" "external-monitor-job" "ldap" "pam-auth" "mailer" "matrix-auth" "windows-slaves" "antisamy-markup-formatter" "matrix-project" "junit"
+do
+  detached_override=$(find $2/ -iname "$detached.[jh]pi")
+  if [[ "$detached_override" == *' '* ]]; then
+    echo "Both .jpi and .hpi present: $detached_override" >&2
+    exit 1
+  fi
+  pin_file="${detached_override}.pinned"
+  if [ ! -f "$pin_file" ]; then
+    echo "Pinning $detached" >&2
+    touch $pin_file
+  fi
+done
