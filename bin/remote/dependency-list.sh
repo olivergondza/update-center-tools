@@ -8,15 +8,19 @@ fi
 data_dir=$(update_center_dir $1)
 
 function extract_dependencies() {
-  zipgrep '-h -A 20' Plugin-Dependencies $1 META-INF/MANIFEST.MF | awk '/Plugin-Dependencies/, /Plugin-Developers/' | head -n -1 | tr -d '\r\n ' | sed s/Plugin-Dependencies://
+  grep -h -A 20 Plugin-Dependencies | awk '/Plugin-Dependencies/, /Plugin-Developers/' | head -n -1 | tr -d '\r\n ' | sed s/Plugin-Dependencies://
 }
 
 for plugin in $data_dir/*.[jh]pi; do
-  basename $plugin
+  mf="$(unzip -p $plugin META-INF/MANIFEST.MF)"
 
-  deps=$(extract_dependencies $plugin)
+  basename "$plugin $(grep 'Plugin-Version:' <<< "$mf" | sed 's/Plugin-Version: //')"
 
+  grep Jenkins-Version <<< "$mf" | sed 's/.*Jenkins-Version: /    jenkins /'
+
+  deps=$(extract_dependencies $plugin <<< "$mf")
   for dep in $(sed s/,/\\\n/g <<< $deps); do
-    echo "    $(sed "s/;resolution:=optional/ (optional)/" <<< $dep)"
+    echo "    - $(sed -e 's/;resolution:=optional/ (optional)/g' -e 's/:/ /g' <<< "$dep")"
   done
+  echo ""
 done
