@@ -1,6 +1,6 @@
 # List all plugins and their dependencies
 
-if [ $# -lt 1 ]; then
+if [ $# -ne 1 ]; then
   command_usage "dependency-list <update_center_id>" >&2
   exit 1
 fi
