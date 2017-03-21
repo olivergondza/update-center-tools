@@ -9,8 +9,7 @@ fi
 src_dir=$(update_center_dir $1)
 dst_dir=$(update_center_dir $2)
 
-sdiff -s <(list_plugins_in_uc $1) <(list_plugins_in_uc $2)
-if [ $? -eq 0 ]; then
+if sdiff -s <(list_plugins_in_uc $1) <(list_plugins_in_uc $2); then
   echo "No changes to promote" >&2
   exit 0
 fi
