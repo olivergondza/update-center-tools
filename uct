@@ -33,9 +33,11 @@ if [ -f "$bin_local" ]; then
   . "$bin_local" "$@"
   exit $?
 elif [ -f "$bin_remote" ]; then
-  # Run bash remotely and feed the script via stdin
+  # Write the script on the other end. We can not just send it over STDIN as it would prevent commands to use it for input
   # The script is concatenated lib.sh and bin/remote/<cmd>.sh
-  cat $dir/bin/lib.sh "$bin_remote" | ssh $uc_authority uct_command="$uct_command" "bash -s" "$@"
+  remote_script=$(cat $dir/bin/lib.sh "$bin_remote" | ssh $uc_authority 'script=$(mktemp /tmp/update-center-tools.XXXXXX); cat > $script; echo $script')
+  # Execute and delete it. (The script needs to be sourced for the trap to work on ^C)
+  ssh $uc_authority uct_command="$uct_command" "trap 'rm $remote_script' EXIT INT TERM; . $remote_script" "$@"
   exit $?
 else
   echo "Unknown command '$cmd'" >&2
